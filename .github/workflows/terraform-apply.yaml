@@ -27,9 +27,22 @@ jobs:
           role-to-assume: arn:aws:iam::746669222274:role/GitHubOIDCRoleS3
           aws-region: us-east-1
 
+       - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.15.8"
+
       - name: Terraform Init
         run: terraform init
+
+      - name: Terraform Format
+        run: terraform fmt -check
+
+      - name: Terraform Validate
+        run: terraform validate
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
 
+      - name: Terraform Destroy
+        run: terraform destroy -auto-approve
